@@ -3,10 +3,25 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(" ");
   const [prevInput, setPrevInput] = useState("");
   const [operator, setOperator] = useState(null);
   const [result, setResult] = useState();
+
+  const Buttons = (props) => {
+    return (
+      <button className="bg-slate-600 py-4 px-5 h-24 w-28 text-white m-1" onClick={() => handleNumberClick(props.number)} >
+        {props.number}
+      </button>
+    )
+  }
+  const OperButtons = (props) => {
+    return(
+      <button className="bg-slate-600 py-4 px-5 h-24 w-28 text-white m-1" onClick={() => handleOperatorClick(props.oper)} >
+        {props.oper}
+      </button>
+    )
+  }
 
   const handleNumberClick = (num) => {
     setInput(input + num);
@@ -39,27 +54,36 @@ export default function Home() {
     setPrevInput("");
     setOperator(null);
   }
+
+  const handlePrevInput = () => {
+    setInput(input.slice(0, -1));
+  }
   return (
     <div>
-    <div className="bg-slate-900 w-96">
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("7")}>7</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("8")}>8</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("9")}>9</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleOperatorClick("/")}>/</button><br />
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("4")}>4</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("5")}>5</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("6")}>6</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleOperatorClick("*")}>*</button><br />
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("1")}>1</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("2")}>2</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleNumberClick("3")}>3</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleOperatorClick("-")}>-</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={() => handleOperatorClick("+")}>+</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={handleEqualClick}>=</button>
-      <button className="bg-slate-600 py-3 px-5 text-white m-2" onClick={handleClearInput}>Clear</button>
-      <h1 className="text-2xl text-white">{prevInput}{operator}{input}{result}</h1>
-    </div>
+      <div className="bg-slate-900 w-1/3 mx-auto my-auto mt-10">
+        <div className="h-20 border border-slate-400">
+          <h1 className="text-2xl text-slate-50 py-4 px-4 float-right">{prevInput}{operator}{input}{result}</h1>
+        </div>
+        <Buttons number={7} />
+        <Buttons number={8} />
+        <Buttons number={9} />
+        <OperButtons oper="/" /><br />
+        <Buttons number={4} />
+        <Buttons number={5} />
+        <Buttons number={6} />
+        <OperButtons oper="*" /><br />
+        <Buttons number={1} />
+        <Buttons number={2} />
+        <Buttons number={3} />
+        <OperButtons oper="-" /><br />
+        <Buttons number={0} />
+        <Buttons number="." />
+        <OperButtons oper="%" />
+        <OperButtons oper="+" /><br />
+        <button className="bg-slate-600 py-3 px-5 h-24 w-28 text-white m-1" onClick={handleEqualClick}>=</button>
+        <button className="bg-slate-600 py-3 px-5 h-24 w-28 text-white m-1" onClick={handlePrevInput}>Undo</button>
+        <button className="bg-slate-600 py-3 px-5 h-24 w-28 text-white m-1" onClick={handleClearInput}>Clear</button>
+      </div>
     </div>
   );
 }
-
